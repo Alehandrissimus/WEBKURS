@@ -1,0 +1,15 @@
+
+<div *ngIf="user" class="m-5">
+  <div class="d-flex mb-5">
+    <div class="me-2">
+      <img src="/assets/user.jpg" alt="user image">
+    </div>
+    <div class="d-flex h4">
+      {{user.firstName}} {{user.lastName}}
+    </div>
+  </div>
+  <!-- description -->
+  <div>
+    {{user.description}}
+  </div>
+</div>

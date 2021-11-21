@@ -1,0 +1,38 @@
+  <!-- Cards -->
+  <div *ngIf="announcements" class="row flex-wrap card-deck">
+    <div *ngFor="let annoucement of announcements | filter: term | paginate: { itemsPerPage: 3, currentPage: p }"
+      class="col-12 col-lg-6 col-xl-4 mb-3 d-flex align-items-stretch">
+      <div class="card w-100">
+        <div class="card-body d-flex body">
+          <!-- first half of the card -->
+          <div class="d-flex flex-column col-10">
+            <div class="d-flex mb-2 image">
+              <img src="/assets/user.jpg" alt="image" class="me-2">
+              <div>
+                <div>{{annoucement.title}}</div>
+                <div>by {{annoucement.owner.firstName}} {{annoucement.owner.lastName}}</div>
+              </div>
+            </div>
+            <div class="description">
+              {{annoucement.description}}
+            </div>
+          </div>
+          <!-- second half of the card -->
+          <div class="d-flex flex-column justify-content-between col-2 second__card">
+            <div class="d-flex word-wrap svg">
+              <img src="/assets/images/icons/today_black_24dp.svg" alt="date" class="svg me-1">
+              <div>{{annoucement?.date | date:"yyyy.MM.dd"}} </div>
+            </div>
+            <div class="d-flex word-wrap svg">
+              <img src="/assets/images/icons/location_on_black_24dp.svg" alt="date" class="svg me-1">
+              <div>{{annoucement?.address}}</div>
+            </div>
+            <div class="d-flex word-wrap svg">
+              <img src="/assets/images/icons/favorite_border_black_24dp.svg" alt="date" class="svg me-1">
+              <div>{{annoucement?.likes}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

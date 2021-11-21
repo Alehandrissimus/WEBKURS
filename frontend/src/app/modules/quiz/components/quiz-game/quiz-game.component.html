@@ -1,0 +1,83 @@
+<!-- quiz sidebar -->
+<form (ngSubmit)="onSubmit()" class="d-flex justify-content-between h-100">
+  <div class="d-flex h-100" style="width: 180px; background-color: '#F8F8F8';">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-column justify-content-between mb-5 w-100">
+        <div class="d-flex flex-column">
+          <!-- question 1 of 10 -->
+          <div class="text-center blue py-3 mb-4">
+            Question {{currentQuiz+1}} of 10
+          </div>
+          <div>
+            <!-- size -->
+            <div class="d-flex align-items-center flex-wrap w-100">
+              <div *ngFor="let quiz of quizData?.questions; let i=index"
+                class="col-4 d-flex justify-content-center mb-4">
+                <div class="size" (click)="currentQuiz=i;changeCurrentQuiz()" [ngClass]="
+                {size__color: currentQuiz==i,
+                 size__error: correctAnswer[i]==undefined && showErrors,
+                 size__green: correctAnswer[i] && showErrors
+                }"></div>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+          <!-- previous, next -->
+          <div class="d-flex justify-content-between mb-4">
+            <button type="button" class="btn btn-primary ms-2" (click)="previous()">previous</button>
+            <button type="button" class="btn btn-primary me-2" (click)="next()">next</button>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </div>
+        </div>
+        <!-- settings, logout -->
+        <ul class="nav nav-pills flex-column">
+          <li class="mb-2">
+            <a routerLink="/profile" routerLinkActive="active" class="nav-link link-dark">
+              <img src="\assets\images\icons\account_circle_black_24dp.svg" alt="image">
+              Profile
+            </a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="/settings" routerLinkActive="active" class="nav-link link-dark">
+              <img src="\assets\images\icons\settings_black_24dp.svg" alt="image">
+              Settings
+            </a>
+          </li>
+          <li class="mb-2" (click)="logOut()">
+            <a routerLink="/auth/login" class="nav-link link-dark">
+              <img src="\assets\images\icons\logout_black_24dp.svg" alt="image">
+              Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- quiz title -->
+  <div class="d-flex flex-column w-100">
+    <div class="d-flex align-items-center justify-content-center title h-50">
+      <div>{{quizData?.questions[currentQuiz].question}}</div>
+    </div>
+    <!-- quiz cards -->
+    <div class="h-50 m-5">
+      <div *ngFor="let quiz of quizData?.questions; let i=index" [ngClass]="{heigth: currentQuiz==i}">
+        <div *ngIf="currentQuiz===i" class="d-flex justify-content-between flex-wrap h-100">
+          <div *ngFor="let answer of quiz.answers; let j=index" class="col-5 mb-5">
+            <!-- ngIf -->
+            <div *ngIf="!quizPassed" class="d-flex justify-content-center align-items-center quiz_card h-100"
+              [ngClass]="{green: answer.answer=='TRUE'}" (click)="changeAnswer(j, quiz.answers)">
+              {{answer.value}}
+            </div>
+            <!--  -->
+            <div *ngIf="quizPassed" class="d-flex justify-content-center align-items-center quiz_card h-100" [ngClass]="{size__green: answer.answer=='TRUE',
+            size__error: answer.answer=='SELECTED'}">
+              {{answer.value}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

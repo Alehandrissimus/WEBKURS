@@ -1,0 +1,8 @@
+branches:
+  only:
+    - repoMerge
+jdk:
+  - oraclejdk11
+language: java
+before_install:
+  - "mvn clean install"

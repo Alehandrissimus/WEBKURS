@@ -1,0 +1,135 @@
+<!-- quiz sidebar -->
+<form [formGroup]="questionsForm" (ngSubmit)="onSubmit()" class="d-flex justify-content-between h-100">
+  <div class="d-flex h-100" style="width: 180px; background-color: '#F8F8F8';">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-column justify-content-between mb-5 w-100">
+        <div class="d-flex flex-column">
+          <!-- question 1 of 10 -->
+          <div class="text-center blue py-3 mb-4">
+            Question {{currentQuiz+1}} of 10
+          </div>
+          <!-- <a routerLink="/profile" class="p-2 mb-5 text-center return">return to profile</a> -->
+          <div formArrayName="questions">
+            <!-- quiz number -->
+            <div class="d-flex align-items-center flex-wrap w-100 mb-5">
+              <div *ngFor="let quiz of questionArray.controls; let i=index" [formGroupName]="i"
+                class="col-4 d-flex justify-content-center mb-4">
+                <!-- <input (click)="currentQuiz=i" [ngClass]="{size__current: currentQuiz==i}" class="size text-center"
+                formControlName="questionId">  -->
+                <div class="size" (click)="currentQuiz=i"
+                  [ngClass]="{size__error: showErrors && quiz.invalid, size__current: currentQuiz==i}"></div>
+              </div>
+            </div>
+            <!-- type of quiz -->
+            <div class="text-center mb-4">
+              <div class="mb-1">
+                Select the type of quiz:
+              </div>
+              <!--  formControlName="quizType" -->
+              <div *ngFor="let quiz of questionArray.controls; let i=index" [formGroupName]="i">
+                <!-- определяем какой будет отображаться questionType -->
+                <div *ngIf="currentQuiz==i">
+                  <select class="w-75" formControlName="questionType" (change)="onChangeType(quiz.value, i)">
+                    <option *ngFor="let type of questionTypes | keyvalue" [value]="type.key">
+                      {{ type.value }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- previous, next -->
+          <div class="d-flex justify-content-between mb-4">
+            <button type="button" class="btn btn-primary ms-1" (click)="previous()">previous</button>
+            <button type="button" class="btn btn-primary me-1" (click)="next()">next</button>
+          </div>
+          <!--  -->
+        </div>
+        <!-- settings, logout -->
+        <ul class="nav nav-pills flex-column">
+          <li class="mb-2">
+            <a routerLink="/profile" routerLinkActive="active" class="nav-link link-dark">
+              <img src="\assets\images\icons\account_circle_black_24dp.svg" alt="image">
+              Profile
+            </a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="/settings" routerLinkActive="active" class="nav-link link-dark">
+              <img src="\assets\images\icons\settings_black_24dp.svg" alt="image">
+              Settings
+            </a>
+          </li>
+          <li class="mb-2" (click)="logOut()">
+            <a routerLink="/auth/login" class="nav-link link-dark">
+              <img src="\assets\images\icons\logout_black_24dp.svg" alt="image">
+              Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="m-5 w-100">
+    <h1 class="mb-5 text-center">Create quiz</h1>
+    <div class="d-flex justify-content-between">
+      <div>
+        <!-- forms + inputs -->
+        <div>
+          <!-- answerId -->
+          <div class="mb-4" formArrayName="questions">
+            <div *ngFor="let quiz of questionArray.controls; let i=index" [formGroupName]="i">
+              <div *ngIf="currentQuiz==i" class="ms-5">
+                <div class="d-flex">
+                  <span class="h4 text__input me-4">
+                    Question
+                  </span>
+                  <!-- определяем какой будет отображаться questionType -->
+                  <input type="text" formControlName="question" class="mb-4"
+                    [class.border-danger]="quiz.invalid && showErrors ? true : false">
+                </div>
+                <!-- answers value -->
+                <div class="d-flex flex-column" formArrayName="answers">
+                  <div>
+                    <div [formGroupName]="j" *ngFor="let answer of getAnswers(quiz); let j=index">
+                      <div *ngIf="!(quiz.value.questionType=='TRUE_FALSE')" class="d-flex justify-content-between mb-4">
+                        <div class="text__input me-4">
+                          Answer {{j+1}}
+                        </div>
+                        <input type="text" class="me-4" formControlName="value"
+                          [class.border-danger]="answer.invalid && showErrors ? true : false">
+                        <div class="d-flex align-items-center">
+                          <!-- <input type="checkbox" value="false" formControlName="answer">  -->
+                          <input type="radio" [value]="'TRUE'" name="answer" formControlName="answer"
+                            (change)="isChecked(quiz.value.answers, answer.value)">
+                        </div>
+                      </div>
+                      <!-- radio -->
+                      <div *ngIf="(quiz.value.questionType=='TRUE_FALSE')" class="d-flex justify-content-between mb-4">
+                        <div class="text__input me-4">
+                          Answer {{j+1}}
+                        </div>
+                        <input type="text" class="me-4" [value]="'TRUE'" formControlName="value"
+                          [class.border-danger]="answer.invalid && showErrors ? true : false">
+                        <div class="d-flex align-items-center">
+                          <!-- <input type="checkbox" value="false" formControlName="answer">  -->
+                          <input type="radio" [value]="'TRUE'" name="answer" formControlName="answer"
+                            (change)="isChecked(quiz.value.answers, answer.value)">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text__input">
+          <div></div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

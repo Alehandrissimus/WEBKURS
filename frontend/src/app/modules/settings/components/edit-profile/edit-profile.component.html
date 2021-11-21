@@ -1,0 +1,67 @@
+<!-- ngModel почитай про формы и поменяй! -->
+<form *ngIf="user" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="m-5">
+  <h1 class="mb-4 text-center">Settings</h1>
+  <div class="d-flex justify-content-between">
+    <!-- left panel -->
+    <div>
+      <div class="d-flex mb-5">
+        <div class="me-2">
+          <img src="/assets/user.jpg" alt="user image">
+        </div>
+        <div class="d-flex h4">
+          {{user.firstName}} {{user.lastName}}
+        </div>
+      </div>
+      <!-- forms + inputs -->
+      <div>
+        <!-- firstName -->
+        <div class="d-flex mb-4">
+          <span class="h4 text__input me-4">
+            First name
+          </span>
+          <input type="text" class="form-control" formControlName="firstName" >
+        </div>
+        <!-- lastName -->
+        <div class="d-flex mb-4">
+          <span class="h4 text__input me-4">
+            Last name
+          </span>
+          <input type="text" class="form-control" formControlName="lastName">
+        </div>
+        <!-- email -->
+        <div class="d-flex mb-4">
+          <span class="h4 text__input me-4">
+            Email
+          </span>
+          <input type="text" class="form-control" formControlName="email">
+        </div>
+        <!-- Description -->
+        <div class="d-flex mb-4">
+          <span class="h4 text__input me-4">
+            Description
+          </span>
+          <textarea class="form-control" cols="50" rows="5" formControlName="description"></textarea>
+        </div>
+        <!--  -->
+        <div class="d-flex mb-4">
+          <span class="text__input me-4">
+          </span>
+          <span>Enter personal information about you. This information will appear on your public profile.</span>
+        </div>
+        <!-- button -->
+        <div class="d-flex">
+          <span class="text__input me-4"></span>
+          <button type="submit" class="btn btn-outline-primary w-25">Send</button>
+        </div>
+      </div>
+    </div>
+    <!-- right panel -->
+    <div>
+      <app-selection-menu></app-selection-menu>
+    </div>
+  </div>
+</form>
+
+
+
+<!-- [class.border-danger]="ownerForm.controls.name?.errors && showErrors" -->

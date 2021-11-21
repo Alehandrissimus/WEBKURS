@@ -1,0 +1,50 @@
+<!--  -->
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="modal-dialog modal-dialog-centered">
+  <div class="modal-content p-4">
+    <div class="modal-body custom_body">
+      <p class="h3 mb-4 text-center">Вход</p>
+      <!-- Email -->
+      <div>
+        <div class="d-flex mb-2 flex-column">
+          <label [class.text-danger]="showErrors">Email</label>
+          <div *ngIf="showErrors" class="text-danger">Неправильно введены данные</div>
+        </div>
+        <input type="login" class="form-control mb-4" placeholder="Email" formControlName="email"
+          [class.border-danger]="showErrors">
+      </div>
+      <!-- Password -->
+      <label class="mb-2" [class.text-danger]="showErrors">Password</label>
+      <div class="input-group input-group-merge pass rounded mb-3"
+        [class.border-danger]="(loginForm.controls.password?.errors || loginForm.controls.confirmPassword?.errors) || showErrors">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control pass"
+          placeholder="Пароль"
+          [class.border-danger]="showErrors">
+        <!-- <div class="input-group-append">
+          <span class="input-group-text">
+            <i id="eye" (click)="onEyeClick()" [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
+              aria-hidden="true"></i>
+          </span>
+        </div> -->
+      </div>
+      <!-- Remember me and Forgot password-->
+      <div class="d-flex justify-content-between mb-4">
+        <div class="mr-2">
+          <input type="checkbox" formControlName="remember">
+          Запомнить меня
+        </div>
+        <div class="pointer">
+          <a routerLink="/auth/recovery">Забыли пароль?</a>
+        </div>
+      </div>
+      <!-- Sign in button -->
+      <div class="mb-4">
+        <button type="submit" class="btn btn-primary w-100">Войти</button>
+      </div>
+      <!-- Register -->
+      <div class="border-top d-flex justify-content-center">
+        <div class="mt-3 pe-auto">Еще не <a class="font-bold pointer" routerLink="/auth/register">зарегистрировались?</a></div>
+      </div>
+
+    </div>
+  </div>
+</form>

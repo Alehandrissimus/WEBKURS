@@ -1,0 +1,19 @@
+<form [formGroup]="annoucementForm" (ngSubmit)="addAnnouncement()" class="m-5">
+  <h1 class="mb-4">Create announcement</h1>
+  <div class="form-group mb-3">
+    <label  for="title" class="mb-2" [class.text-danger]="showErrors">Title</label>
+    <input type="text" formControlName="title" class="form-control" placeholder="Enter title"
+    [class.border-danger]="showErrors">
+  </div>
+  <div class="form-group mb-3">
+    <label for="address" class="mb-1" [class.text-danger]="showErrors">Address</label>
+    <input type="text" formControlName="address" class="form-control" placeholder="Enter address"
+    [class.border-danger]="showErrors">
+  </div>
+  <div class="form-group mb-4">
+    <label for="description" class="mb-1" [class.text-danger]="showErrors">Description</label>
+    <textarea formControlName="description"  cols="20" rows="5" class="form-control" placeholder="Enter description..." [class.border-danger]="showErrors"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Promise</button>
+</form>
+<img src="/assets/images/icons/close_black_24dp.svg" class="cancel" (click)="close()">

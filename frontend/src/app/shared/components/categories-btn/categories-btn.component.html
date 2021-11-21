@@ -1,0 +1,6 @@
+<div>
+  <select class="form-control" [formControl]="categoriesControl">
+    <option value="0" selected>Все Категории</option>
+    <option [value]="category.key" *ngFor="let category of quizType | keyvalue">{{category.value}}</option>
+  </select>
+</div>
